@@ -22,14 +22,26 @@ public abstract class BaseSelectQuery<TEntity>
 
     public IQueryable<TEntity> GetSelectQuery(DbSet<TEntity> dbSet)
 	{
+		var query = GetBaseSelectQuery(dbSet);
+		query = query.AsPagedQuery(From, Size);
+		return query;
+	}
+
+	public IQueryable<TEntity> GetCountQuery(DbSet<TEntity> dbSet)
+	{
+		var query = GetBaseSelectQuery(dbSet);
+		return query;
+	}
+
+	private IQueryable<TEntity> GetBaseSelectQuery(DbSet<TEntity> dbSet)
+	{
 		var query = dbSet.AsQueryable();
 
-		if(Id != null)
+		if (Id != null)
 			query = query.Where(x => x.Id == Id);
 
 		query = GetSelectQuery(query);
 		query = query.OrderByDynamic(OrderBy, IsOrderDescending);
-		query = query.AsPagedQuery(From, Size);
 
 		return query;
 	}

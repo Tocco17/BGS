@@ -12,4 +12,5 @@ internal interface IRepository<TEntity>
 	where TEntity : BaseEntity
 {
 	Task<IEnumerable<TEntity>> SelectAsync(BaseSelectQuery<TEntity>? query = null);
+	Task<int> CountAsync(BaseSelectQuery<TEntity>? query = null);
 }

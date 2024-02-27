@@ -22,6 +22,13 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
 		_dbSet = dbContext.Set<TEntity>();
 	}
 
+	public async Task<int> CountAsync(BaseSelectQuery<TEntity>? query = null)
+	{
+		var selectQuery = query?.GetCountQuery(_dbSet) ?? _dbSet.AsQueryable();
+		var result = await selectQuery.CountAsync();
+		return result;
+	}
+
 	public async Task<IEnumerable<TEntity>> SelectAsync(BaseSelectQuery<TEntity>? query = null)
 	{
 		var selectQuery = query?.GetSelectQuery(_dbSet) ?? _dbSet.AsQueryable();
