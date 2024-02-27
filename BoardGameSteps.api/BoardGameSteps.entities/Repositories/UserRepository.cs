@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using BoardGameSteps.entities.Models;
+using BoardGameSteps.entities.Queries;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -20,11 +21,16 @@ public class UserRepository
 		_dbSet = dbContext.Set<User>();
 	}
 
-	public Task<TDbResponse> SelectAsync<TDbResponse>(IDbRequest<TEntity, TDbResponse> request)
+	public Task<IEnumerable<User>> SelectAsync(UserQuery query)
 	{
-		var query = _dbSet.AsSelectQueriable(request);
 
-
-		throw new NotImplementedException();
 	}
+
+	//public Task<TDbResponse> SelectAsync<TDbResponse>(IDbRequest<TEntity, TDbResponse> request)
+	//{
+	//	var query = _dbSet.AsSelectQueriable(request);
+
+
+	//	throw new NotImplementedException();
+	//}
 }

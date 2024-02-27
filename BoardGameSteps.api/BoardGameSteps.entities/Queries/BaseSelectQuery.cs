@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,7 +17,7 @@ public abstract class BaseSelectQuery<TEntity>
 	public Guid? Id { get; set; } = null;
 	public int? From { get; set; } = null;
     public int? Size { get; set; } = null;
-	public string? OrderBy { get; set; } = null;
+	public PropertyInfo? OrderBy { get; set; } = null;
 	public bool IsOrderDescending { get; set; } = false;
 
     public IQueryable<TEntity> GetSelectQuery(DbSet<TEntity> dbSet)
