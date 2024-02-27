@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 using BoardGameSteps.entities.Models;
+using BoardGameSteps.entities.Queries;
 
 using Microsoft.EntityFrameworkCore;
 
 namespace BoardGameSteps.entities.Repositories;
-public abstract class BaseRepository<TEntity> 
+public abstract class BaseRepository<TEntity> : IRepository<TEntity>
 	where TEntity : BaseEntity
 {
 	protected readonly DbContext _dbContext;
@@ -21,17 +22,10 @@ public abstract class BaseRepository<TEntity>
 		_dbSet = dbContext.Set<TEntity>();
 	}
 
-	public Task<TDbResponse> SelectAsync<TDbResponse>(IDbRequest<TEntity, TDbResponse> request)
+	public async Task<IEnumerable<TEntity>> SelectAsync(BaseSelectQuery<TEntity>? query = null)
 	{
-		var query = _dbSet.AsSelectQueriable(request);
-
-
-		throw new NotImplementedException();
+		var selectQuery = query?.GetSelectQuery(_dbSet) ?? _dbSet.AsQueryable();
+		var result = await selectQuery.ToListAsync();
+		return result;
 	}
-}
-
-public interface IDbRequest<TEntity, TDbResponse>
-	where TEntity : BaseEntity
-{
-	IQueryable<TDbResponse> Query(DbSet<TEntity> dbSet);
 }

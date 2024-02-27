@@ -10,27 +10,24 @@ using BoardGameSteps.entities.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BoardGameSteps.entities.Queries;
-public class UserQuery
+public class UserSelectQuery : BaseSelectQuery<User>
 {
-	public Guid? Id { get; set; } = null;
 	public string? Name { get; set; } = null;
 	public string? Surname { get; set; } = null;
 	public string? Nickname { get; set; } = null;
 
-	public IQueryable<User> SelectQuery(DbSet<User> dbSet)
+	protected override IQueryable<User> GetSelectQuery(IQueryable<User> query)
 	{
-		var query = dbSet.AsQueryable();
-
-		if (Id != null) 
+		if (Id != null)
 			query = query.Where(x => x.Id == Id);
 
-		if (Name != null) 
+		if (Name != null)
 			query = query.Where(x => x.Name == Name);
 
-		if (Surname != null) 
+		if (Surname != null)
 			query = query.Where(x => x.Surname == Surname);
 
-		if (Nickname != null) 
+		if (Nickname != null)
 			query = query.Where(x => x.Nickname == Nickname);
 
 		return query;

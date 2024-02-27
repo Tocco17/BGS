@@ -4,8 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoardGameSteps.entities.Repositories;
-internal interface IRepository
-{
+using BoardGameSteps.entities.Models;
+using BoardGameSteps.entities.Queries;
 
+namespace BoardGameSteps.entities.Repositories;
+internal interface IRepository<TEntity>
+	where TEntity : BaseEntity
+{
+	Task<IEnumerable<TEntity>> SelectAsync(BaseSelectQuery<TEntity>? query = null);
 }

@@ -10,27 +10,9 @@ using BoardGameSteps.entities.Queries;
 using Microsoft.EntityFrameworkCore;
 
 namespace BoardGameSteps.entities.Repositories;
-public class UserRepository
+public class UserRepository : BaseRepository<User>
 {
-	protected readonly DbContext _dbContext;
-	protected readonly DbSet<User> _dbSet;
-
-	public UserRepository(DbContext dbContext)
+	public UserRepository(DbContext dbContext) : base(dbContext)
 	{
-		_dbContext = dbContext;
-		_dbSet = dbContext.Set<User>();
 	}
-
-	public Task<IEnumerable<User>> SelectAsync(UserQuery query)
-	{
-
-	}
-
-	//public Task<TDbResponse> SelectAsync<TDbResponse>(IDbRequest<TEntity, TDbResponse> request)
-	//{
-	//	var query = _dbSet.AsSelectQueriable(request);
-
-
-	//	throw new NotImplementedException();
-	//}
 }
