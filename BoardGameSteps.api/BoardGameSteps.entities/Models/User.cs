@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace BoardGameSteps.entities.Models;
 public class User : BaseEntity
 {
-    [Required] public string Name { get; set; } = null!;
-    [Required] public string Surname { get; set; } = null!;
-    [Required] public string Nickname { get; set; } = null!;
+	[Required] public string Name { get; set; } = null!;
+	[Required] public string Surname { get; set; } = null!;
+	[Required] public string Nickname { get; set; } = null!;
 }
