@@ -27,6 +27,13 @@ public abstract class BaseSelectQuery<TEntity>
 		return query;
 	}
 
+    public IQueryable<TEntity> GetSelectFirstQuery(DbSet<TEntity> dbSet)
+	{
+		var query = GetBaseSelectQuery(dbSet);
+		query = query.AsPagedQuery(size: 1);
+		return query;
+	}
+
 	public IQueryable<TEntity> GetCountQuery(DbSet<TEntity> dbSet)
 	{
 		var query = GetBaseSelectQuery(dbSet);

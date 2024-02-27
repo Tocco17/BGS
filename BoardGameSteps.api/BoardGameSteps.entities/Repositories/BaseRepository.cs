@@ -35,4 +35,18 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
 		var result = await selectQuery.ToListAsync();
 		return result;
 	}
+
+	public async Task<TEntity?> SelectFirstOrDefaultAsync(BaseSelectQuery<TEntity>? query = null)
+	{
+		var selectQuery = query?.GetSelectFirstQuery(_dbSet) ?? _dbSet.AsQueryable();
+		var result = await selectQuery.FirstOrDefaultAsync();
+		return result;
+	}
+
+	public async Task<TEntity?> SelectSingleOrDefaultAsync(BaseSelectQuery<TEntity>? query = null)
+	{
+		var selectQuery = query?.GetSelectQuery(_dbSet) ?? _dbSet.AsQueryable();
+		var result = await selectQuery.SingleOrDefaultAsync();
+		return result;
+	}
 }
