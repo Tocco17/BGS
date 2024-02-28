@@ -16,11 +16,12 @@ internal interface IRepository<TEntity>
 	Task<TEntity?> SelectSingleOrDefaultAsync(BaseSelectQuery<TEntity>? query = null);
 	Task<int> CountAsync(BaseSelectQuery<TEntity>? query = null);
 
-	//INSERT SINGLE
-	//UPDATE SINGLE
-	//DELETE SINGLE
+	Task<int> InsertAsync(TEntity entity);
+	Task<int> InsertMultipleAsync(IEnumerable<TEntity> entity);
 
-	//INSERT MULTIPLE
-	//UPDATE MULTIPLE
-	//DELETE MULTIPLE
+	Task<int> UpdateAsync(TEntity entity);
+	Task<int> UpdateMultipleAsync(IEnumerable<TEntity> entity);
+
+	Task<int> DeleteAsync(TEntity entity);
+	Task<int> DeleteMultipleAsync(IEnumerable<TEntity> entity);
 }

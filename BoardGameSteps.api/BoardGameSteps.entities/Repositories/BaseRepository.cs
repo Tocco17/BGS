@@ -29,6 +29,34 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
 		return result;
 	}
 
+	public Task<int> DeleteAsync(TEntity entity)
+	{
+		_dbSet.Remove(entity);
+		var count = _dbContext.SaveChangesAsync();
+		return count;
+	}
+
+	public Task<int> DeleteMultipleAsync(IEnumerable<TEntity> entity)
+	{
+		_dbSet.RemoveRange(entity);
+		var count = _dbContext.SaveChangesAsync();
+		return count;
+	}
+
+	public Task<int> InsertAsync(TEntity entity)
+	{
+		_dbSet.AddAsync(entity);
+		var count = _dbContext.SaveChangesAsync();
+		return count;
+	}
+
+	public Task<int> InsertMultipleAsync(IEnumerable<TEntity> entity)
+	{
+		_dbSet.AddRangeAsync(entity);
+		var count = _dbContext.SaveChangesAsync();
+		return count;
+	}
+
 	public async Task<IEnumerable<TEntity>> SelectAsync(BaseSelectQuery<TEntity>? query = null)
 	{
 		var selectQuery = query?.GetSelectQuery(_dbSet) ?? _dbSet.AsQueryable();
@@ -48,5 +76,19 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
 		var selectQuery = query?.GetSelectQuery(_dbSet) ?? _dbSet.AsQueryable();
 		var result = await selectQuery.SingleOrDefaultAsync();
 		return result;
+	}
+
+	public Task<int> UpdateAsync(TEntity entity)
+	{
+		_dbSet.Update(entity);
+		var count = _dbContext.SaveChangesAsync();
+		return count;
+	}
+
+	public Task<int> UpdateMultipleAsync(IEnumerable<TEntity> entity)
+	{
+		_dbSet.UpdateRange(entity);
+		var count = _dbContext.SaveChangesAsync();
+		return count;
 	}
 }
