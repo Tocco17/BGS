@@ -5,3 +5,7 @@ BoardGameSteps.api/BoardGameSteps.entities/bin
 BoardGameSteps.api/BoardGameSteps.entities/obj
 BoardGameSteps.api/BoardGameSteps.migrations/bin
 BoardGameSteps.api/BoardGameSteps.migrations/obj
+BoardGameSteps.api/BoardGameSteps.test/bin
+BoardGameSteps.api/BoardGameSteps.test/obj
+BoardGameSteps.api/packages/MSTest.TestAdapter.2.2.10/build
+BoardGameSteps.api/packages
