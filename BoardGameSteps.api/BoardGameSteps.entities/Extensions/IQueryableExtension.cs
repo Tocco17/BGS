@@ -24,7 +24,6 @@ public static class IQueryableExtension
 
 		var entityType = typeof(TEntity);
 		var propertyType = entityType.GetProperty(property.Name);
-		//var propertyType = property.PropertyType;
 
 		if (propertyType == null)
 			throw new ArgumentException($"The {property.Name} property doesn't exist in the {entityType.Name} entity.");
