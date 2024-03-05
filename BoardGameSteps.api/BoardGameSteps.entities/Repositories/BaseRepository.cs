@@ -55,10 +55,15 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
 		return count;
 	}
 
-	public Task<int> InsertMultipleAsync(IEnumerable<TEntity> entity)
+	public async Task<int> InsertMultipleAsync(IEnumerable<BaseInsertQuery<TEntity>> queries)
 	{
-		_dbSet.AddRangeAsync(entity);
-		var count = _dbContext.SaveChangesAsync();
+		foreach ( var query in queries)
+			query.Validate();
+
+		var entities = queries.Select(q => q.Initialize());
+
+		await _dbSet.AddRangeAsync(entities);
+		var count = await _dbContext.SaveChangesAsync();
 		return count;
 	}
 

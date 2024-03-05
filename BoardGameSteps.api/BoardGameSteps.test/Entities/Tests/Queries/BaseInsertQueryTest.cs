@@ -49,12 +49,12 @@ public class BaseInsertQueryTest : IClassFixture<DatabaseFixture>
 	{
 		var entity = new GenericEntity
 		{
-			StringGenericEntityProperty = "test",
+			StringGenericEntityProperty = "TestInsert",
 		};
 		var insertQuery = new GenericInsertQuery(entity);
 		var count = await _repo.InsertAsync(insertQuery);
 
-		if(count != 1)
+		if (count != 1)
 			Assert.Fail($"Count of inserted entities is {count}, while it should be 1.");
 
 		Assert.True(true);
@@ -65,7 +65,7 @@ public class BaseInsertQueryTest : IClassFixture<DatabaseFixture>
 	{
 		var entity = new GenericEntity
 		{
-			StringGenericEntityProperty = "test",
+			StringGenericEntityProperty = "TestNewGuid",
 		};
 		var insertQuery = new GenericInsertQuery(entity);
 
@@ -75,7 +75,7 @@ public class BaseInsertQueryTest : IClassFixture<DatabaseFixture>
 
 		var newGuid = entity.Id;
 
-		if(newGuid == Guid.Empty)
+		if (newGuid == Guid.Empty)
 			Assert.Fail("The guid is empty.");
 
 		Assert.True(true);
@@ -86,7 +86,7 @@ public class BaseInsertQueryTest : IClassFixture<DatabaseFixture>
 	{
 		var firstEntity = new GenericEntity
 		{
-			StringGenericEntityProperty = "test",
+			StringGenericEntityProperty = "TestDuplicateGuid First",
 		};
 		var firstInsertQuery = new GenericInsertQuery(firstEntity);
 
@@ -97,7 +97,7 @@ public class BaseInsertQueryTest : IClassFixture<DatabaseFixture>
 		var secondEntity = new GenericEntity
 		{
 			Id = firstId,
-			StringGenericEntityProperty = "test",
+			StringGenericEntityProperty = "TestDuplicateGuid Second",
 		};
 		var secondInsertQuery = new GenericInsertQuery(secondEntity);
 
@@ -114,7 +114,7 @@ public class BaseInsertQueryTest : IClassFixture<DatabaseFixture>
 	{
 		var entity = new GenericEntity
 		{
-			StringGenericEntityProperty = "test",
+			StringGenericEntityProperty = "TestSelectAfterInsert",
 		};
 		var insertQuery = new GenericInsertQuery(entity);
 		await _repo.InsertAsync(insertQuery);
@@ -131,5 +131,76 @@ public class BaseInsertQueryTest : IClassFixture<DatabaseFixture>
 			Assert.Fail("No entity has been found.");
 
 		Assert.True(true);
+	}
+
+	[Fact]
+	public async Task TestMultipleInsert()
+	{
+		var entities = new List<GenericEntity>
+		{
+			new GenericEntity
+			{
+				StringGenericEntityProperty = "TestMultipleInsert First",
+			},
+			new GenericEntity
+			{
+				StringGenericEntityProperty = "TestMultipleInsert Second",
+			},
+			new GenericEntity
+			{
+				StringGenericEntityProperty = "TestMultipleInsert Third",
+			}
+		};
+		var insertQuery = entities.Select(e => new GenericInsertQuery(e));
+
+		var count = await _repo.InsertMultipleAsync(insertQuery);
+
+		if (count != entities.Count())
+		{
+			var elements = await _repo.SelectAsync();
+			var ids = elements.Select(e => e.StringGenericEntityProperty);
+			var idJoin = string.Join(" | ", ids);
+
+			Assert.Fail($"Entities: {entities.Count} | Count: {count}. Id: {idJoin}");
+		}
+
+		Assert.True(true);
+	}
+
+	[Fact]
+	public async Task TestWrongValidateMultipleInsert()
+	{
+		try
+		{
+			var entities = new List<GenericEntity>
+			{
+				new GenericEntity
+				{
+					StringGenericEntityProperty = "TestWrongValidateMultipleInsert First",
+				},
+				new GenericEntity
+				{
+					StringGenericEntityProperty = "TestWrongValidateMultipleInsert Second",
+				},
+				new GenericEntity
+				{
+					StringGenericEntityProperty = "TestWrongValidateMultipleInsert Third",
+				},
+				new GenericEntity(),
+			};
+			var insertQuery = entities.Select(e => new GenericInsertQuery(e));
+
+			var count = await _repo.InsertMultipleAsync(insertQuery);
+
+			Assert.Fail($"It should have thrown an exception. | Entities: {entities.Count} | Count: {count}.");
+		}
+		catch (InsertQueryValidateException)
+		{
+			Assert.True(true);
+		}
+		catch (Exception ex)
+		{
+			Assert.Fail(ex.Message);
+		}
 	}
 }
