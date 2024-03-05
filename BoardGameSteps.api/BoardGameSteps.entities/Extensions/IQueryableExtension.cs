@@ -23,10 +23,8 @@ public static class IQueryableExtension
 				: query.OrderByDescending(x => x.Id);
 
 		var entityType = typeof(TEntity);
-		var propertyType = entityType.GetProperty(property.Name);
-
-		if (propertyType == null)
-			throw new ArgumentException($"The {property.Name} property doesn't exist in the {entityType.Name} entity.");
+		var propertyType = entityType.GetProperty(property.Name)
+			?? throw new ArgumentException($"The {property.Name} property doesn't exist in the {entityType.Name} entity.");
 
 		if (isDescending)
 			return query.OrderByDescending(x => property.GetValue(x, null));

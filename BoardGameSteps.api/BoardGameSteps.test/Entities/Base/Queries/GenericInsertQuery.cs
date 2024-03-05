@@ -8,12 +8,8 @@ using BoardGameSteps.entities.Queries;
 using BoardGameSteps.test.Entities.Base.Entities;
 
 namespace BoardGameSteps.test.Entities.Base.Queries;
-public class GenericInsertQuery : BaseInsertQuery<GenericEntity>
+public class GenericInsertQuery(GenericEntity entity) : BaseInsertQuery<GenericEntity>(entity)
 {
-	public GenericInsertQuery(GenericEntity entity) : base(entity)
-	{
-	}
-
 	protected override GenericEntity GetInizitializedEntity()
 	{
 		return this.Entity;

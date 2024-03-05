@@ -11,17 +11,11 @@ using BoardGameSteps.entities.Queries;
 using Microsoft.EntityFrameworkCore;
 
 namespace BoardGameSteps.entities.Repositories;
-public abstract class BaseRepository<TEntity> : IRepository<TEntity>
+public abstract class BaseRepository<TEntity>(DbContext dbContext) : IRepository<TEntity>
 	where TEntity : BaseEntity<TEntity>
 {
-	protected readonly DbContext _dbContext;
-	protected readonly DbSet<TEntity> _dbSet;
-
-	public BaseRepository(DbContext dbContext)
-	{
-		_dbContext = dbContext;
-		_dbSet = dbContext.Set<TEntity>();
-	}
+	protected readonly DbContext _dbContext = dbContext;
+	protected readonly DbSet<TEntity> _dbSet = dbContext.Set<TEntity>();
 
 	public async Task<int> CountAsync(BaseSelectQuery<TEntity>? query = null)
 	{
@@ -44,14 +38,14 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
 		return count;
 	}
 
-	public Task<int> InsertAsync(BaseInsertQuery<TEntity> query)
+	public async Task<int> InsertAsync(BaseInsertQuery<TEntity> query)
 	{
 		query.Validate();
 
 		var entity = query.Initialize();
-		_dbSet.AddAsync(entity);
+		await _dbSet.AddAsync(entity);
 
-		var count = _dbContext.SaveChangesAsync();
+		var count = await _dbContext.SaveChangesAsync();
 		return count;
 	}
 

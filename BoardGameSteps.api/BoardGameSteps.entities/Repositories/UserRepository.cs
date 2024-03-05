@@ -10,9 +10,6 @@ using BoardGameSteps.entities.Queries;
 using Microsoft.EntityFrameworkCore;
 
 namespace BoardGameSteps.entities.Repositories;
-public class UserRepository : BaseRepository<User>
+public class UserRepository(DbContext dbContext) : BaseRepository<User>(dbContext)
 {
-	public UserRepository(DbContext dbContext) : base(dbContext)
-	{
-	}
 }

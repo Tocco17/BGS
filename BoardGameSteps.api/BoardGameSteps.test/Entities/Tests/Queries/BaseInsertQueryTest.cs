@@ -13,16 +13,10 @@ using BoardGameSteps.test.Entities.Base.Repositories;
 using BoardGameSteps.test.Fixtures;
 
 namespace BoardGameSteps.test.Entities.Tests.Queries;
-public class BaseInsertQueryTest : IClassFixture<DatabaseFixture>
+public class BaseInsertQueryTest(DatabaseFixture fixture) : IClassFixture<DatabaseFixture>
 {
-	private readonly GenericDbContext _context;
-	private readonly GenericRepository _repo;
-
-	public BaseInsertQueryTest(DatabaseFixture fixture)
-	{
-		_context = fixture.DbContext;
-		_repo = new GenericRepository(fixture.DbContext);
-	}
+	//private readonly GenericDbContext _context = fixture.DbContext;
+	private readonly GenericRepository _repo = new(fixture.DbContext);
 
 	[Fact]
 	public async Task TestValidate()
@@ -68,8 +62,6 @@ public class BaseInsertQueryTest : IClassFixture<DatabaseFixture>
 			StringGenericEntityProperty = "TestNewGuid",
 		};
 		var insertQuery = new GenericInsertQuery(entity);
-
-		var initialGuid = entity.Id;
 
 		await _repo.InsertAsync(insertQuery);
 
@@ -138,16 +130,13 @@ public class BaseInsertQueryTest : IClassFixture<DatabaseFixture>
 	{
 		var entities = new List<GenericEntity>
 		{
-			new GenericEntity
-			{
+			new() {
 				StringGenericEntityProperty = "TestMultipleInsert First",
 			},
-			new GenericEntity
-			{
+			new() {
 				StringGenericEntityProperty = "TestMultipleInsert Second",
 			},
-			new GenericEntity
-			{
+			new() {
 				StringGenericEntityProperty = "TestMultipleInsert Third",
 			}
 		};
@@ -155,7 +144,7 @@ public class BaseInsertQueryTest : IClassFixture<DatabaseFixture>
 
 		var count = await _repo.InsertMultipleAsync(insertQuery);
 
-		if (count != entities.Count())
+		if (count != entities.Count)
 		{
 			var elements = await _repo.SelectAsync();
 			var ids = elements.Select(e => e.StringGenericEntityProperty);
@@ -174,19 +163,16 @@ public class BaseInsertQueryTest : IClassFixture<DatabaseFixture>
 		{
 			var entities = new List<GenericEntity>
 			{
-				new GenericEntity
-				{
+				new() {
 					StringGenericEntityProperty = "TestWrongValidateMultipleInsert First",
 				},
-				new GenericEntity
-				{
+				new() {
 					StringGenericEntityProperty = "TestWrongValidateMultipleInsert Second",
 				},
-				new GenericEntity
-				{
+				new() {
 					StringGenericEntityProperty = "TestWrongValidateMultipleInsert Third",
 				},
-				new GenericEntity(),
+				new(),
 			};
 			var insertQuery = entities.Select(e => new GenericInsertQuery(e));
 

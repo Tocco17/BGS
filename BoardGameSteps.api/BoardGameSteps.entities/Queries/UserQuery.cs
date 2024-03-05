@@ -34,12 +34,8 @@ public class UserSelectQuery : BaseSelectQuery<User>
 	}
 }
 
-public class UserInsertQuery : BaseInsertQuery<User>
+public class UserInsertQuery(User entity) : BaseInsertQuery<User>(entity)
 {
-	public UserInsertQuery(User entity) : base(entity)
-	{
-	}
-
 	protected override User GetInizitializedEntity()
 	{
 		var entity = new User

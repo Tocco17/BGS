@@ -9,11 +9,7 @@ using BoardGameSteps.entities.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BoardGameSteps.entities.Contexts;
-public class BgsDbContext : DbContext
+public class BgsDbContext(DbContextOptions options) : DbContext(options)
 {
-	public BgsDbContext(DbContextOptions options) : base(options)
-	{
-	}
-
-    public DbSet<User>	Users { get; set; }
+	public DbSet<User>	Users { get; set; }
 }

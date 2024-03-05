@@ -8,15 +8,10 @@ using BoardGameSteps.entities.Models;
 using BoardGameSteps.entities.Exceptions;
 
 namespace BoardGameSteps.entities.Queries;
-public abstract class BaseInsertQuery<TEntity>
+public abstract class BaseInsertQuery<TEntity>(TEntity entity)
 	where TEntity : BaseEntity<TEntity>
 {
-    public TEntity Entity { get; set; } = null!;
-
-	protected BaseInsertQuery(TEntity entity)
-	{
-		Entity = entity;
-	}
+	public TEntity Entity { get; set; } = entity;
 
 	/// <summary>
 	/// 

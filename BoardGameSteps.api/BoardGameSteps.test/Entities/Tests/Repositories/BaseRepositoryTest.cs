@@ -9,16 +9,10 @@ using BoardGameSteps.test.Entities.Base.Repositories;
 using BoardGameSteps.test.Fixtures;
 
 namespace BoardGameSteps.test.Entities.Tests.Repositories;
-public class BaseRepositoryTest : IClassFixture<DatabaseFixture>
+public class BaseRepositoryTest(DatabaseFixture fixture) : IClassFixture<DatabaseFixture>
 {
-	private readonly GenericDbContext _context;
-	private readonly GenericRepository _repo;
-
-	public BaseRepositoryTest(DatabaseFixture fixture)
-	{
-		_context = fixture.DbContext;
-		_repo = new GenericRepository(fixture.DbContext);
-	}
+	//private readonly GenericDbContext _context = fixture.DbContext;
+	private readonly GenericRepository _repo = new(fixture.DbContext);
 
 	[Fact]
 	public async Task TestSelectFixture()
