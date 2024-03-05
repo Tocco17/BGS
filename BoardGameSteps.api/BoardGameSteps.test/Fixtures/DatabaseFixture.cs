@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using BoardGameSteps.entities.Contexts;
-
+using BoardGameSteps.test.Entities.Base.Contextes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,16 +13,16 @@ namespace BoardGameSteps.test.Fixtures;
 
 public class DatabaseFixture : IDisposable
 {
-	public BgsDbContext DbContext;
+	public GenericDbContext DbContext;
 
 	public DatabaseFixture()
 	{
 		var serviceProvider = new ServiceCollection()
-			.AddDbContext<BgsDbContext>(options =>
+			.AddDbContext<GenericDbContext>(options =>
 				options.UseInMemoryDatabase(databaseName: "TestDatabase"))
 			.BuildServiceProvider();
 
-		DbContext = serviceProvider.GetRequiredService<BgsDbContext>();
+		DbContext = serviceProvider.GetRequiredService<GenericDbContext>();
 		DbContext.Database.EnsureCreated();
 	}
 
