@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using BoardGameSteps.entities.Exceptions;
 using BoardGameSteps.entities.Models;
 using BoardGameSteps.entities.Queries;
 
@@ -43,9 +44,13 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
 		return count;
 	}
 
-	public Task<int> InsertAsync(TEntity entity)
+	public Task<int> InsertAsync(BaseInsertQuery<TEntity> query)
 	{
+		query.Validate();
+
+		var entity = query.Initialize();
 		_dbSet.AddAsync(entity);
+
 		var count = _dbContext.SaveChangesAsync();
 		return count;
 	}
