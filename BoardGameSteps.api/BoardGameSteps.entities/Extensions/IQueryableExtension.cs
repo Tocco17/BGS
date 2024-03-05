@@ -15,7 +15,7 @@ public static class IQueryableExtension
 		PropertyInfo? property,
 		bool isDescending = false
 	)
-		where TEntity : BaseEntity
+		where TEntity : BaseEntity<TEntity>
 	{
 		if (property == null)
 			return !isDescending

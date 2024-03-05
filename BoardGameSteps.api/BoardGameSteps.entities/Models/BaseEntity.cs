@@ -3,9 +3,10 @@
 namespace BoardGameSteps.entities.Models;
 
 [PrimaryKey(nameof(Id))]
-public abstract class BaseEntity
+public abstract class BaseEntity<TEntity>
+    where TEntity : BaseEntity<TEntity>
 {
     public Guid Id { get; set; }
 
-    public abstract BaseEntity Duplicate();
+    public abstract TEntity Duplicate();
 }

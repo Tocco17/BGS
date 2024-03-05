@@ -9,7 +9,7 @@ using BoardGameSteps.entities.Exceptions;
 
 namespace BoardGameSteps.entities.Queries;
 public abstract class BaseInsertQuery<TEntity>
-	where TEntity : BaseEntity
+	where TEntity : BaseEntity<TEntity>
 {
     public TEntity Entity { get; set; } = null!;
 
@@ -40,14 +40,10 @@ public abstract class BaseInsertQuery<TEntity>
 	
 	public TEntity Initialize()
 	{
-		//var entity = Entity.Duplicate();
-		//Initialize(entity);
 		var entity = GetInizitializedEntity();
 		entity.Id = Guid.NewGuid();
 		return entity;
 	}
-
-	protected abstract void Initialize(TEntity entity);
 
 	protected abstract TEntity GetInizitializedEntity();
 

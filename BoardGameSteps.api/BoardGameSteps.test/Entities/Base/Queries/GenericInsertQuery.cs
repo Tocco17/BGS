@@ -28,9 +28,4 @@ public class GenericInsertQuery : BaseInsertQuery<GenericEntity>
 
 		return errors;
 	}
-
-	protected override void Initialize(GenericEntity entity)
-	{
-		return;
-	}
 }

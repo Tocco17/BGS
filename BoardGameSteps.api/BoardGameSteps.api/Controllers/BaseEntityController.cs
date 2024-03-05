@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BoardGameSteps.api.Controllers;
 
 public class BaseEntityController<TEntity> : ControllerBase, IEntityController<TEntity>
-	where TEntity : BaseEntity
+	where TEntity : BaseEntity<TEntity>
 {
 	public Task<ActionResult<IDeleteEntityResponse<TEntity>>> DeleteAsync(IDeleteEntityRequest<TEntity> request)
 	{

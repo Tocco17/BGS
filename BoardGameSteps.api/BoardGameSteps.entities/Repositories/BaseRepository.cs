@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BoardGameSteps.entities.Repositories;
 public abstract class BaseRepository<TEntity> : IRepository<TEntity>
-	where TEntity : BaseEntity
+	where TEntity : BaseEntity<TEntity>
 {
 	protected readonly DbContext _dbContext;
 	protected readonly DbSet<TEntity> _dbSet;

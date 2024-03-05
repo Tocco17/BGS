@@ -66,11 +66,4 @@ public class UserInsertQuery : BaseInsertQuery<User>
 
 		return errors;
 	}
-
-	protected override void Initialize(User entity)
-	{
-		entity.Name = this.Entity.Name;
-		entity.Surname = this.Entity.Surname;
-		entity.Nickname = this.Entity.Nickname;
-	}
 }

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BoardGameSteps.api.Controllers;
 
 public interface IEntityController<TEntity>
-	where TEntity : BaseEntity
+	where TEntity : BaseEntity<TEntity>
 {
 	Task<ActionResult<IEnumerable<TEntity>>> GetAsync(IGetEntityRequest<TEntity> request);
 	Task<ActionResult<TEntity>> GetByIdAsync(int id);

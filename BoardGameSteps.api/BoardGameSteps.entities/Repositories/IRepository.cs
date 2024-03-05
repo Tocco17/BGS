@@ -9,7 +9,7 @@ using BoardGameSteps.entities.Queries;
 
 namespace BoardGameSteps.entities.Repositories;
 internal interface IRepository<TEntity>
-	where TEntity : BaseEntity
+	where TEntity : BaseEntity<TEntity>
 {
 	Task<IEnumerable<TEntity>> SelectAsync(BaseSelectQuery<TEntity>? query = null);
 	Task<TEntity?> SelectFirstOrDefaultAsync(BaseSelectQuery<TEntity>? query = null);

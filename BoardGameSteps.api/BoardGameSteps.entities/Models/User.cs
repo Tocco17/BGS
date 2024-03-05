@@ -6,13 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BoardGameSteps.entities.Models;
-public class User : BaseEntity
+public class User : BaseEntity<User>
 {
 	[Required] public string Name { get; set; } = null!;
 	[Required] public string Surname { get; set; } = null!;
 	[Required] public string Nickname { get; set; } = null!;
 
-	public override BaseEntity Duplicate()
+	public override User Duplicate()
 	{
 		var user = new User
 		{

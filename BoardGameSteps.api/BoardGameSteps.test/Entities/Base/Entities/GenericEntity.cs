@@ -6,12 +6,17 @@ using System.Threading.Tasks;
 using BoardGameSteps.entities.Models;
 
 namespace BoardGameSteps.test.Entities.Base.Entities;
-public class GenericEntity : BaseEntity
+public class GenericEntity : BaseEntity<GenericEntity>
 {
     public string StringGenericEntityProperty { get; set; } = null!;
 
-    public override BaseEntity Duplicate()
+    public override GenericEntity Duplicate()
     {
-        throw new NotImplementedException();
+        var entity = new GenericEntity
+        {
+            Id = Id,
+            StringGenericEntityProperty = StringGenericEntityProperty,
+        };
+        return entity;
     }
 }

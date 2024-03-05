@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BoardGameSteps.entities.Queries;
 public abstract class BaseSelectQuery<TEntity>
-	where TEntity : BaseEntity
+	where TEntity : BaseEntity<TEntity>
 {
 	public Guid? Id { get; set; } = null;
 	public int? From { get; set; } = null;
