@@ -6,4 +6,6 @@ namespace BoardGameSteps.entities.Models;
 public abstract class BaseEntity
 {
     public Guid Id { get; set; }
+
+    public abstract BaseEntity Duplicate();
 }

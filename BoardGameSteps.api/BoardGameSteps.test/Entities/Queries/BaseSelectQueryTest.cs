@@ -24,13 +24,13 @@ public class BaseSelectQueryTest : IClassFixture<DatabaseFixture>
 	private readonly DatabaseFixture _fixture;
 	private readonly BgsDbContext _context;
 
-    public BaseSelectQueryTest(DatabaseFixture fixture)
-    {
+	public BaseSelectQueryTest(DatabaseFixture fixture)
+	{
 		_fixture = fixture;
 		_context = fixture.DbContext;
-    }
+	}
 
-    [Fact]
+	[Fact]
 	public void TestWrongProperty()
 	{
 		try
@@ -57,7 +57,7 @@ public class BaseSelectQueryTest : IClassFixture<DatabaseFixture>
 		{
 			Assert.True(true);
 		}
-		
+
 
 	}
 

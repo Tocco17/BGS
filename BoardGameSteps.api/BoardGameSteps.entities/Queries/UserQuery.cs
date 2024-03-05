@@ -33,3 +33,44 @@ public class UserSelectQuery : BaseSelectQuery<User>
 		return query;
 	}
 }
+
+public class UserInsertQuery : BaseInsertQuery<User>
+{
+	public UserInsertQuery(User entity) : base(entity)
+	{
+	}
+
+	protected override User GetInizitializedEntity()
+	{
+		var entity = new User
+		{
+			Name = this.Entity.Name,
+			Surname = this.Entity.Surname,
+			Nickname = this.Entity.Nickname,
+		};
+		return entity;
+	}
+
+	protected override List<string> GetValidateErrors()
+	{
+		var errors = new List<string>();
+
+		if (string.IsNullOrEmpty(Entity.Name))
+			errors.Add("A Name is necessary for the insert of a User.");
+
+		if (string.IsNullOrEmpty(Entity.Surname))
+			errors.Add("A Surname is necessary for the insert of a User.");
+
+		if (string.IsNullOrEmpty(Entity.Nickname))
+			errors.Add("A Nickname is necessary for the insert of a User.");
+
+		return errors;
+	}
+
+	protected override void Initialize(User entity)
+	{
+		entity.Name = this.Entity.Name;
+		entity.Surname = this.Entity.Surname;
+		entity.Nickname = this.Entity.Nickname;
+	}
+}
