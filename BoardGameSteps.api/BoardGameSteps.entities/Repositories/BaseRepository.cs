@@ -82,10 +82,14 @@ public abstract class BaseRepository<TEntity>(DbContext dbContext) : IRepository
 		return result;
 	}
 
-	public Task<int> UpdateAsync(TEntity entity)
+	public async Task<int> UpdateAsync(BaseUpdateQuery<TEntity> query)
 	{
+		query.Validate();
+
+		var entity = query.Initialize();
 		_dbSet.Update(entity);
-		var count = _dbContext.SaveChangesAsync();
+
+		var count = await _dbContext.SaveChangesAsync();
 		return count;
 	}
 

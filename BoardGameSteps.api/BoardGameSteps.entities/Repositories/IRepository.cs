@@ -19,7 +19,7 @@ internal interface IRepository<TEntity>
 	Task<int> InsertAsync(BaseInsertQuery<TEntity> query);
 	Task<int> InsertMultipleAsync(IEnumerable<BaseInsertQuery<TEntity>> queries);
 
-	Task<int> UpdateAsync(TEntity entity);
+	Task<int> UpdateAsync(BaseUpdateQuery<TEntity> query);
 	Task<int> UpdateMultipleAsync(IEnumerable<TEntity> entity);
 
 	Task<int> DeleteAsync(TEntity entity);
