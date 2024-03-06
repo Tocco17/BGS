@@ -5,9 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BoardGameSteps.entities.Exceptions;
-public class InsertQueryValidateException : Exception
+public class InsertQueryValidateException(string? message) : Exception(message)
 {
-	public InsertQueryValidateException(string? message) : base(message)
-	{
-	}
 }

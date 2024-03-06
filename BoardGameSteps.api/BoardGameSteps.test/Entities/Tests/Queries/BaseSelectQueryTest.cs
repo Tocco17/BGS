@@ -22,14 +22,9 @@ using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace BoardGameSteps.test.Entities.Tests.Queries;
-public class BaseSelectQueryTest : IClassFixture<DatabaseFixture>
+public class BaseSelectQueryTest(DatabaseFixture fixture) : IClassFixture<DatabaseFixture>
 {
-	private readonly GenericDbContext _context;
-
-	public BaseSelectQueryTest(DatabaseFixture fixture)
-	{
-		_context = fixture.DbContext;
-	}
+	private readonly GenericDbContext _context = fixture.DbContext;
 
 	[Fact]
 	public void TestWrongProperty()
@@ -80,7 +75,7 @@ public class BaseSelectQueryTest : IClassFixture<DatabaseFixture>
 		{
 			OrderBy = idProperty
 		};
-		var query = selectQueryObject.GetSelectQuery(entityDbSet);
+		_ = selectQueryObject.GetSelectQuery(entityDbSet);
 
 		Assert.True(true);
 	}

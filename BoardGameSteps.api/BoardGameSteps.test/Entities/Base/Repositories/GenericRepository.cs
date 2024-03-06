@@ -10,9 +10,6 @@ using BoardGameSteps.test.Entities.Base.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace BoardGameSteps.test.Entities.Base.Repositories;
-public class GenericRepository : BaseRepository<GenericEntity>
+public class GenericRepository(DbContext dbContext) : BaseRepository<GenericEntity>(dbContext)
 {
-	public GenericRepository(DbContext dbContext) : base(dbContext)
-	{
-	}
 }
