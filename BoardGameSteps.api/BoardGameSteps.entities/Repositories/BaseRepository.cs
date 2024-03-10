@@ -93,10 +93,16 @@ public abstract class BaseRepository<TEntity>(DbContext dbContext) : IRepository
 		return count;
 	}
 
-	public Task<int> UpdateMultipleAsync(IEnumerable<TEntity> entity)
+	public async Task<int> UpdateMultipleAsync(IEnumerable<BaseUpdateQuery<TEntity>> queries)
 	{
-		_dbSet.UpdateRange(entity);
-		var count = _dbContext.SaveChangesAsync();
+		foreach (var query in queries)
+			query.Validate();
+
+		var entities = queries.Select(q => q.Initialize());
+
+		_dbSet.UpdateRange(entities);
+
+		var count = await _dbContext.SaveChangesAsync();
 		return count;
 	}
 }
