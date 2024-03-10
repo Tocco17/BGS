@@ -10,7 +10,7 @@ using BoardGameSteps.entities.Models;
 namespace BoardGameSteps.entities.Extensions;
 public static class IQueryableExtension
 {
-	public static IQueryable<TEntity> OrderByDynamic<TEntity>(
+	public static IOrderedQueryable<TEntity> OrderByDynamic<TEntity>(
 		this IQueryable<TEntity> query,
 		PropertyInfo? property,
 		bool isDescending = false
