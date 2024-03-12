@@ -25,6 +25,7 @@ public abstract class BaseSelectQuery<TEntity>
 		var query = GetBaseSelectQuery(dbSet);
 		query = GetOrderedQuery(query);
 		query = query.AsPagedQuery(From, Size);
+		query = Include(query);
 		return query;
 	}
 
@@ -33,6 +34,7 @@ public abstract class BaseSelectQuery<TEntity>
 		var query = GetBaseSelectQuery(dbSet);
 		query = GetOrderedQuery(query);
 		query = query.AsPagedQuery(size: 1);
+		query = Include(query);
 		return query;
 	}
 
@@ -40,6 +42,12 @@ public abstract class BaseSelectQuery<TEntity>
 	{
 		var query = GetBaseSelectQuery(dbSet);
 		return query;
+	}
+
+	public IOrderedQueryable<TEntity> GetOrderedQuery(IQueryable<TEntity> query)
+	{
+		var orderedQuery = query.OrderByDynamic(OrderBy, IsOrderDescending);
+		return orderedQuery;
 	}
 
 	private IQueryable<TEntity> GetBaseSelectQuery(DbSet<TEntity> dbSet)
@@ -54,11 +62,7 @@ public abstract class BaseSelectQuery<TEntity>
 		return query;
 	}
 
-	public IOrderedQueryable<TEntity> GetOrderedQuery(IQueryable<TEntity> query)
-	{
-		var orderedQuery = query.OrderByDynamic(OrderBy, IsOrderDescending);
-		return orderedQuery;
-	}
 
 	protected abstract IQueryable<TEntity> GetSelectQuery(IQueryable<TEntity> query);
+	protected abstract IQueryable<TEntity> Include(IQueryable<TEntity> query);
 }

@@ -32,6 +32,11 @@ public class UserSelectQuery : BaseSelectQuery<User>
 
 		return query;
 	}
+
+	protected override IQueryable<User> Include(IQueryable<User> query)
+	{
+		return query;
+	}
 }
 
 public class UserInsertQuery(User entity) : BaseInsertQuery<User>(entity)
