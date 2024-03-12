@@ -21,8 +21,8 @@ public class BaseRepositoryTest : IClassFixture<DatabaseFixture>
 	{
 		_repo = new(fixture.DbContext);
 
-		_baseDb = new List<GenericEntity>
-		{
+		_baseDb =
+		[
 			new()
 			{
 				Id = Guid.NewGuid(),
@@ -38,7 +38,7 @@ public class BaseRepositoryTest : IClassFixture<DatabaseFixture>
 				Id = Guid.NewGuid(),
 				StringGenericEntityProperty = "BaseRepositoryTest Constructor third",
 			},
-		};
+		];
 
 		var insertQueries = _baseDb.Select(x => new GenericInsertQuery(x));
 		_ = _repo.InsertMultipleAsync(insertQueries);
