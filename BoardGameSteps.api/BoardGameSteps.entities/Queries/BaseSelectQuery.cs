@@ -23,7 +23,7 @@ public abstract class BaseSelectQuery<TEntity>
     public IQueryable<TEntity> GetSelectQuery(DbSet<TEntity> dbSet)
 	{
 		var query = GetBaseSelectQuery(dbSet);
-		query = query.OrderByDynamic(OrderBy, IsOrderDescending);
+		query = GetOrderedQuery(query);
 		query = query.AsPagedQuery(From, Size);
 		return query;
 	}
@@ -31,7 +31,7 @@ public abstract class BaseSelectQuery<TEntity>
     public IQueryable<TEntity> GetSelectFirstQuery(DbSet<TEntity> dbSet)
 	{
 		var query = GetBaseSelectQuery(dbSet);
-		query = query.OrderByDynamic(OrderBy, IsOrderDescending);
+		query = GetOrderedQuery(query);
 		query = query.AsPagedQuery(size: 1);
 		return query;
 	}
