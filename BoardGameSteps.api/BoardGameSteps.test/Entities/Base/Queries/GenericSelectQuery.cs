@@ -19,4 +19,9 @@ internal class GenericSelectQuery : BaseSelectQuery<GenericEntity>
 
 		return query;
 	}
+
+	protected override IQueryable<GenericEntity> Include(IQueryable<GenericEntity> query)
+	{
+		return query;
+	}
 }
