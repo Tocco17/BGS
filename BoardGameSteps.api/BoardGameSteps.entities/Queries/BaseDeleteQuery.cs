@@ -2,7 +2,7 @@
 using BoardGameSteps.entities.Models;
 
 namespace BoardGameSteps.entities.Queries;
-public abstract class BaseUpdateQuery<TEntity>(TEntity entity)
+public abstract class BaseDeleteQuery<TEntity>(TEntity entity)
 	where TEntity : BaseEntity<TEntity>
 {
 	public TEntity Entity { get; set; } = entity;
@@ -10,7 +10,7 @@ public abstract class BaseUpdateQuery<TEntity>(TEntity entity)
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <exception cref="UpdateQueryValidateException"></exception>
+	/// <exception cref="DeleteQueryValidateException"></exception>
 	public void Validate()
 	{
 		var errors = GetValidateErrors();
@@ -23,17 +23,8 @@ public abstract class BaseUpdateQuery<TEntity>(TEntity entity)
 
 		var errorMessage = string.Join("\n", errors);
 
-		throw new UpdateQueryValidateException(errorMessage);
+		throw new DeleteQueryValidateException(errorMessage);
 	}
-
-	public TEntity Initialize()
-	{
-		var entity = GetInizitializedEntity();
-		entity.Id = Guid.NewGuid();
-		return entity;
-	}
-
-	protected abstract TEntity GetInizitializedEntity();
 
 	protected abstract List<string> GetValidateErrors();
 }

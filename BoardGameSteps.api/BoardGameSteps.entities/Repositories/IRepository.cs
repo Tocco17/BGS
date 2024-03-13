@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using BoardGameSteps.entities.Models;
+﻿using BoardGameSteps.entities.Models;
 using BoardGameSteps.entities.Queries;
 
 namespace BoardGameSteps.entities.Repositories;
@@ -22,6 +16,6 @@ internal interface IRepository<TEntity>
 	Task<int> UpdateAsync(BaseUpdateQuery<TEntity> query);
 	Task<int> UpdateMultipleAsync(IEnumerable<BaseUpdateQuery<TEntity>> queries);
 
-	Task<int> DeleteAsync(TEntity entity);
-	Task<int> DeleteMultipleAsync(IEnumerable<TEntity> entity);
+	Task<int> DeleteAsync(BaseDeleteQuery<TEntity> query);
+	Task<int> DeleteMultipleAsync(IEnumerable<BaseDeleteQuery<TEntity>> queries);
 }

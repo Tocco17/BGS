@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using BoardGameSteps.entities.Models;
-
-using Microsoft.EntityFrameworkCore;
+﻿using BoardGameSteps.entities.Models;
 
 namespace BoardGameSteps.entities.Queries;
 public class UserSelectQuery : BaseSelectQuery<User>
@@ -94,6 +85,18 @@ public class UserUpdateQuery(User entity) : BaseUpdateQuery<User>(entity)
 
 		if (string.IsNullOrEmpty(Entity.Nickname))
 			errors.Add("A Nickname is necessary for the update of a User.");
+
+		return errors;
+	}
+}
+
+public class UserDeleteQuery(User entity) : BaseDeleteQuery<User>(entity)
+{
+	protected override List<string> GetValidateErrors()
+	{
+		var errors = new List<string>();
+
+		errors.Add("This action can't be perfored.");
 
 		return errors;
 	}

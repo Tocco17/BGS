@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using BoardGameSteps.entities.Exceptions;
-using BoardGameSteps.entities.Models;
+﻿using BoardGameSteps.entities.Models;
 using BoardGameSteps.entities.Queries;
 
 using Microsoft.EntityFrameworkCore;
@@ -24,17 +17,23 @@ public abstract class BaseRepository<TEntity>(DbContext dbContext) : IRepository
 		return result;
 	}
 
-	public Task<int> DeleteAsync(TEntity entity)
+	public async Task<int> DeleteAsync(BaseDeleteQuery<TEntity> query)
 	{
+		query.Validate();
+		var entity = query.Entity;
 		_dbSet.Remove(entity);
-		var count = _dbContext.SaveChangesAsync();
+		var count = await _dbContext.SaveChangesAsync();
 		return count;
 	}
 
-	public Task<int> DeleteMultipleAsync(IEnumerable<TEntity> entity)
+	public async Task<int> DeleteMultipleAsync(IEnumerable<BaseDeleteQuery<TEntity>> queries)
 	{
-		_dbSet.RemoveRange(entity);
-		var count = _dbContext.SaveChangesAsync();
+		foreach(var query in queries)
+			query.Validate();
+
+		var entities = queries.Select(x => x.Entity);
+		_dbSet.RemoveRange(entities);
+		var count = await _dbContext.SaveChangesAsync();
 		return count;
 	}
 
@@ -51,7 +50,7 @@ public abstract class BaseRepository<TEntity>(DbContext dbContext) : IRepository
 
 	public async Task<int> InsertMultipleAsync(IEnumerable<BaseInsertQuery<TEntity>> queries)
 	{
-		foreach ( var query in queries)
+		foreach (var query in queries)
 			query.Validate();
 
 		var entities = queries.Select(q => q.Initialize());
