@@ -94,9 +94,10 @@ public class UserDeleteQuery(User entity) : BaseDeleteQuery<User>(entity)
 {
 	protected override List<string> GetValidateErrors()
 	{
-		var errors = new List<string>();
-
-		errors.Add("This action can't be perfored.");
+		var errors = new List<string>
+		{
+			"This action can't be perfored."
+		};
 
 		return errors;
 	}
